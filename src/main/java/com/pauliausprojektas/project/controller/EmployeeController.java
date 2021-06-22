@@ -5,10 +5,7 @@ import com.pauliausprojektas.project.repositories.EmployeeRepository;
 import com.pauliausprojektas.project.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +24,20 @@ public class EmployeeController {
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
          Employee saveEmployee = employeeService.createEmployee(employee);
          return new ResponseEntity<>(saveEmployee, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{employeeId}")
+    public void deleteEmployeeById(@PathVariable("employeeId") Long employeeId){
+        employeeService.deleteEmployee(employeeId);
+    }
+
+    @PutMapping("{employeeId")
+    public void updateEmployee(
+            @PathVariable("employeeId") Long employeeId,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String password,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String jobTitle){
+        employeeService.updateEmployee(employeeId,lastName,password,email,jobTitle);
     }
 }
